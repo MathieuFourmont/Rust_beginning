@@ -1,24 +1,26 @@
+# Intro
+
 fn main() {} -> declares a function that returns nothing
 
 println! = keyword for printing -> it is a macro that takes "Hello world!", the macro is defined by the '!' before the parenthesis:  
-        `println!("Hello World!\n");`
+`println!("Hello World!\n");`
 
 Macros are used in metaprogramming, i.e., code that writes code.  
 They look like functions in other system programming languages like C and C++, but instead of generating a function call like functions, they are expanded into source code that gets compiled with the rest of the program.
         
-Positional arguments:  
+### Positional arguments:
 `println!("Enhance your coding skills from {0} courses. {0} courses are very {1}\n", "Educative", "interactive");`
     
-Named arguments:  
+### Named arguments:  
 `println!("{company} provides {kind} courses\n\n", company = "Educative", kind = "interactive");`
     
-Placeholder traits:  
+### Placeholder traits:  
 `println!("Number : 10 \nBinary:{:b} Hexadecimal:{:x} Octal:{:o}\n", 10, 10, 10);`
     
-Basic Math:  
+### Basic Math:  
 `println!("{} + {} = {}\n",10, 10, 10 + 10);`
     
-Placeholder for a Debug Trait:  
+### Placeholder for a Debug Trait:  
 - It is possible to display multiple values using a single placeholder with the help of the debug trait (a colon followed by a question mark {:?}).
 - You can use a debug trait and write as many values as desired within the parentheses:  
 `println!("{:?}\n", ("This is a Rust Course", 101));`
@@ -160,7 +162,7 @@ To declare an array slice, we need to specify the name of the source array and t
 `let slice_array1:&[i32] = &arr;` -> define the slice  
 `let slice_array2:&[i32] = &arr[0..2];`  
 `println!("Slice of an array: {:?}", slice_array1);`  
-`println!("Slice of an array: {:?}", slice_array2);` 
+`println!("Slice of an array: {:?}", slice_array2);`  
 Output:  
 "Slice of an array: [1, 2, 3, 4]"  
 "Slice of an array: [1, 2]"
@@ -222,3 +224,184 @@ Unlike let variables, const variables cannot be shadowed.
 
 # Operators
 
+## Intro
+
+An operator is a symbol that takes one or more values and outputs another. It tells the compiler to perform some sort of operation.
+
+Different operators are available in Rust for performing different operations. Based on the number of operands, the operators can be categorized into binary and unary operators:
+
+### Unary Operators
+
+The operators that act upon a single operand are unary operators.
+
+- Borrow expression (&, &mut)
+- Dereference expression (*)
+- Negation expression (!)
+
+### Binary Operators
+
+The operators that deal with two operands are binary operators.
+
+- Arithmetic expression (+, -, *, /, %)
+- Logical expression (&&, ||)
+- Comparison expression (>, <, <=, >=, ==, !=)
+- Bitwise expressions (&, |, ^)
+- Assignment expression (=)
+- Compound Assignment expression (-=, +=, /=, %=, *=)
+- Typecast expression (as)
+
+## Type Casting Operator
+
+Type casting is when you convert the data type of the variable to some other data type.  
+In Rust, typecasting is done using the `as` keyword followed by the desired data type of the variable or value.
+
+`let a = 15;`  
+`let b = (a as f64) / 2.0;`   
+`println!("a: {}", a);`  
+`println!("b: {}", b);`  
+Output:  
+`a: 15`  
+`b: 7.5`
+
+What data types can be type casted?  
+- integer to floating-point and vice versa
+- integer to String
+
+But:
+- String (&str) or character cannot be type casted to the data type of type integer or float
+- Character cannot be type casted to String type and vice versa
+
+## Borrowing and Dereferencing Operators
+
+### Borrowing Operator
+
+Borrowing means to reference the original data binding or to share the data. (References are just like pointers in C.)
+
+Two variables are involved in a borrowing relationship when the referenced variable holds a value that the referencing variable borrows. The referencing variable simply points to the memory location of the referenced variable.
+
+There are 2 types:
+- Shared borrowing:  
+A piece of data that is shared by single or multiple variables but it cannot be altered
+- Mutable borrowing:  
+A piece of data that is shared and altered by a single variable (but the data is inaccessible to other variables at that time)
+
+Mutable references (mutable borrow operations) are moved while immutable references (shared borrow operations) are copied.
+
+Ex:  
+`fn main() {`  
+`let x = 10;`  
+`let mut y = 13;`  
+//immutable reference to a variable  
+`let a = &x;`  
+`println!("Value of a:{}", a);`  
+`println!("Value of x:{}", x);` // x value remains the same since it is immutably borrowed
+
+//mutable reference to a variable  
+`let b = &mut y;`  
+`println!("Value of b:{}", b);`  
+`*b = 11;` // derefencing  
+`println!("Value of b:{}", b);` // updated value of b  
+`println!("Value of y:{}", y);` // y value can be changed as it is mutuably borrowed  
+`}`
+
+Output:  
+`Value of a:10`  
+`Value of x:10`  
+`Value of b:13`  
+`Value of b:11`  
+`Value of y:11`
+
+### Dereferencing Operator
+
+Once you have a mutable reference to a variable, dereferencing is the term used to refer to changing the value of the referenced variable using its address stored in the referring variable. (`*a = b`)
+
+Ex:  
+`fn main() {`  
+//mutable reference to a variable  
+`let mut x = 10;`  
+`println!("Value of x:{}", x);`  
+`let a = & mut x;`  
+`println!("Value of a:{}", a);`  
+//dereference a variable  
+`*a = 11;`  
+`println!("Value of a:{}", a);`  
+`println!("Value of x:{}", x);` // Note that value of x is updated  
+`}`  
+Output:  
+`Value of x:10`  
+`Value of a:10`  
+`Value of a:11`  
+`Value of x:11`
+
+## Precedence and Associativity
+
+### Precedence
+
+The precedence of an operator determines which operation is performed first in an expression with more than one operators.
+
+Operators are listed below in the order of their precedence from highest to lowest:  
+- Unary:
+	- Logical/Bitwise NOT: `!`
+	- Dereference: `*`
+	- Borrow: `&`, `&mut`
+- Binary:
+	- Typecast: `as`
+	- Multiplication: `*`, Division: `/`, Remainder: `%`
+	- Addition: `+`, Subtraction: `-`
+	- Left Shift: `<<`, Right Shift: `>>`
+	- Bitwise AND: `&`
+	- Bitwise XOR: `^`
+	- Bitwise OR: `|`
+	- Comparison: `==` `!=` `<` `>` `<=` `>=`
+	- Logical AND: `&&`
+	- Logical OR: `||`
+	- Range: `start .. stop`
+	- Assignment/Compound Assignment: `=` `+=` `-=` `*=` `/=` `%=` `&=` `|=` `^=` `<<=` `>>=`
+
+### Associativity
+
+If two or more operators of the same precedence appear in a statement, then which operator will be evaluated first is defined by the associativity.
+
+#### Left to Right Associativity
+
+Left associativity occurs when an expression is evaluated from left to right. An expression such as `a ~ b ~ c`, in this case, would be interpreted as `(a ~ b) ~ c` where `~` can be any operator.
+
+The operators below can be chained as left associative:  
+- `as`
+- `*`, `/`, `%`
+- `+`, `-`
+- `<<`, `>>`
+- `&`
+- `^`
+- `|`
+- `&&`
+- `||`
+
+Ex:  
+1.  `println!("Answer : {}",( 3 + 5 ) * 9 / 7 & 8);`
+- (3 + 5) = 8
+- 8 * 9 = 72
+- 72 / 7 = 10
+- 10 & 8 = 8
+
+2. `println!("{}", 2 + 3 / 5 ^ 7 & 8 | 9);`
+- 3 / 5 = 0
+	- 2 + 0 ^ 7 & 8 | 9
+- 2 + 0 = 2
+	- 2 ^ 7 & 8 | 9
+- 7 & 8 = 0
+	- 2 ^ 0 | 9
+- 2 ^ 0 = 2
+	- 2 | 9 = 11
+
+## Challenge
+
+How to calculate (a + b) ^ 3
+
+`fn main() {`  
+`let a = 2;`  
+`let b = 2;`  
+
+`let c = i32::pow(a,3) + i32::pow(b,3) + ( 3 * a * b * (a + b));`  
+`println!("{}", c);`  
+`}`
