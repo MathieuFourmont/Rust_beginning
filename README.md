@@ -1,24 +1,26 @@
+# Intro
+
 fn main() {} -> declares a function that returns nothing
 
 println! = keyword for printing -> it is a macro that takes "Hello world!", the macro is defined by the '!' before the parenthesis:  
-        `println!("Hello World!\n");`
+`println!("Hello World!\n");`
 
 Macros are used in metaprogramming, i.e., code that writes code.  
 They look like functions in other system programming languages like C and C++, but instead of generating a function call like functions, they are expanded into source code that gets compiled with the rest of the program.
         
-Positional arguments:  
+### Positional arguments:
 `println!("Enhance your coding skills from {0} courses. {0} courses are very {1}\n", "Educative", "interactive");`
     
-Named arguments:  
+### Named arguments:  
 `println!("{company} provides {kind} courses\n\n", company = "Educative", kind = "interactive");`
     
-Placeholder traits:  
+### Placeholder traits:  
 `println!("Number : 10 \nBinary:{:b} Hexadecimal:{:x} Octal:{:o}\n", 10, 10, 10);`
     
-Basic Math:  
+### Basic Math:  
 `println!("{} + {} = {}\n",10, 10, 10 + 10);`
     
-Placeholder for a Debug Trait:  
+### Placeholder for a Debug Trait:  
 - It is possible to display multiple values using a single placeholder with the help of the debug trait (a colon followed by a question mark {:?}).
 - You can use a debug trait and write as many values as desired within the parentheses:  
 `println!("{:?}\n", ("This is a Rust Course", 101));`
@@ -160,7 +162,7 @@ To declare an array slice, we need to specify the name of the source array and t
 `let slice_array1:&[i32] = &arr;` -> define the slice  
 `let slice_array2:&[i32] = &arr[0..2];`  
 `println!("Slice of an array: {:?}", slice_array1);`  
-`println!("Slice of an array: {:?}", slice_array2);` 
+`println!("Slice of an array: {:?}", slice_array2);`  
 Output:  
 "Slice of an array: [1, 2, 3, 4]"  
 "Slice of an array: [1, 2]"
